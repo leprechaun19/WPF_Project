@@ -1,0 +1,107 @@
+﻿<Window x:Class="HotelBooking.Pages.Workerr"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelBooking.Pages"
+        xmlns:loc="clr-namespace:HotelBooking"
+        xmlns:valid="clr-namespace:HotelBooking.Classes"
+        mc:Ignorable="d"
+        Title="Добавление Сотрудника" Height="420" Width="350" MinHeight="420" MinWidth="350" MaxHeight="420" MaxWidth="350" 
+        WindowStartupLocation="CenterScreen" Icon="{DynamicResource Admin}">
+    <Grid  Background="AliceBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+            <Border  Grid.Row="0" Grid.ColumnSpan="2">
+               <TextBlock Text="Введите данные сотрудника" Margin=" 0 0 0 0 "
+                          Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                          FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Код сотрудника"
+                       Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="25 0 0 0"
+                       FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <loc:TextBoxWatermarked x:Name="Code" Grid.Column="1" Grid.Row="1"
+                                Style="{DynamicResource MaterialDesignTextBox}" FontSize="12" 
+                                Width="110" Margin="0 0 0 10" Watermark="123456"
+                                Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+            <TextBox.Text>
+                <Binding Path="Room_code" Mode="TwoWay" UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <valid:IDValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </loc:TextBoxWatermarked>
+
+        <TextBlock Text="Имя Фамилия" Grid.Column="0" Grid.Row="2"
+                   Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="25 0 0 0"
+                       FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <loc:TextBoxWatermarked x:Name="Fuul_Name" Grid.Column="1" Grid.Row="2"
+                                Style="{DynamicResource MaterialDesignTextBox}" FontSize="12" 
+                                Width="110" Margin="0 0 0 10" Watermark="Иван Иванов"
+                                Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+            <TextBox.Text>
+                <Binding Path="Category_name" Mode="TwoWay" UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <valid:NameValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </loc:TextBoxWatermarked>
+
+        <TextBlock Text="Должность" Grid.Column="0" Grid.Row="3"
+                   Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="25 0 0 0"
+                       FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <loc:TextBoxWatermarked x:Name="Position" Grid.Column="1" Grid.Row="3" 
+                                Style="{DynamicResource MaterialDesignTextBox}" FontSize="12" 
+                                Width="110" Margin="0 0 0 10" Watermark="Бухгалтер"
+                                Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+            <TextBox.Text>
+                <Binding Path="Servicess" Mode="TwoWay" UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <valid:NameValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </loc:TextBoxWatermarked>
+
+        <TextBlock Text="Дата Рождения" Grid.Column="0" Grid.Row="4"
+                   Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="25 0 0 0"
+                       FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" />
+        <DatePicker x:Name="DateBorn" Grid.Column="1" Grid.Row="4" SelectedDateFormat="Short"  
+                    Height="20" Width="110" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        
+        <TextBlock Text="Зарплата" Grid.Column="0" Grid.Row="5"
+                   Style="{DynamicResource MaterialDesignTitleTextBlock}" Margin="25 0 0 0"
+                   FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <loc:TextBoxWatermarked x:Name="Salary" Grid.Column="1" Grid.Row="5"
+                                Style="{DynamicResource MaterialDesignTextBox}" FontSize="12" 
+                                Width="110" Margin="0 0 0 10" Watermark="650"
+                                Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+            <TextBox.Text>
+                <Binding Path="NumberOfSeats" Mode="TwoWay" UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <valid:DecimalValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </loc:TextBoxWatermarked>
+
+        <Button Content="Добавить"  Grid.Row="7" Grid.ColumnSpan="2" Click="Add_Click"
+                VerticalAlignment="Top" HorizontalAlignment="Center"/>
+    </Grid>
+</Window>

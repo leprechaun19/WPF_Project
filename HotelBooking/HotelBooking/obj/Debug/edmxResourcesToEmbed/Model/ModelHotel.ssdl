@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище HotelBookingModel1" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Autorization">
+    <Key>
+      <PropertyRef Name="Login" />
+    </Key>
+    <Property Name="Login" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Userr" Type="nvarchar" MaxLength="30" />
+    <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="Booking_number" />
+    </Key>
+    <Property Name="Booking_number" Type="int" Nullable="false" />
+    <Property Name="Room_code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Client_code" Type="int" Nullable="false" />
+    <Property Name="TypeOfFood" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="Payment_number" Type="int" Nullable="false" />
+    <Property Name="Departuree" Type="date" Nullable="false" />
+    <Property Name="DateOfBooking" Type="date" Nullable="false" />
+    <Property Name="Arrivall" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategoryOfRoom">
+    <Key>
+      <PropertyRef Name="Category_code" />
+    </Key>
+    <Property Name="Category_code" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="Category_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="NumberOfSeats" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="NumbersOfRoom" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Servicess" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Client_code" />
+    </Key>
+    <Property Name="Client_code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Full_name" Type="nvarchar" MaxLength="35" Nullable="false" />
+    <Property Name="Birthdate" Type="date" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Passport_number" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pay">
+    <Key>
+      <PropertyRef Name="Payment_number" />
+    </Key>
+    <Property Name="Payment_number" Type="int" Nullable="false" />
+    <Property Name="DateOfPay" Type="date" Nullable="false" />
+    <Property Name="Payer" Type="int" Nullable="false" />
+    <Property Name="Card_number" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Summ" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="Room_code" />
+    </Key>
+    <Property Name="Room_code" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Code_category" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="Repair" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="Booking" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="Free" Type="nvarchar" MaxLength="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TypeOfFood">
+    <Key>
+      <PropertyRef Name="Type_code" />
+    </Key>
+    <Property Name="Type_code" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="Type_name" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="Summa" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Workers">
+    <Key>
+      <PropertyRef Name="Worker_code" />
+    </Key>
+    <Property Name="Worker_code" Type="int" Nullable="false" />
+    <Property Name="Full_name" Type="nvarchar" MaxLength="35" Nullable="false" />
+    <Property Name="Birthdate" Type="date" Nullable="false" />
+    <Property Name="Position" Type="nvarchar" MaxLength="40" />
+    <Property Name="Salary" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Pay__Payer__15502E78">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Pay" Type="Self.Pay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Client_code" />
+      </Principal>
+      <Dependent Role="Pay">
+        <PropertyRef Name="Payer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Client_code">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Client_code" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Client_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Code_category">
+    <End Role="CategoryOfRoom" Type="Self.CategoryOfRoom" Multiplicity="1" />
+    <End Role="Room" Type="Self.Room" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryOfRoom">
+        <PropertyRef Name="Category_code" />
+      </Principal>
+      <Dependent Role="Room">
+        <PropertyRef Name="Code_category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_number">
+    <End Role="Pay" Type="Self.Pay" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pay">
+        <PropertyRef Name="Payment_number" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Payment_number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Room_code">
+    <End Role="Room" Type="Self.Room" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="Room_code" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Room_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TypeOfFood">
+    <End Role="TypeOfFood" Type="Self.TypeOfFood" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeOfFood">
+        <PropertyRef Name="Type_code" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="TypeOfFood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="Enter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="login" Type="nvarchar" Mode="In" />
+    <Parameter Name="password" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="FreeRooms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="datee" Type="date" Mode="In" />
+  </Function>
+  <Function Name="FreeRoomsForBooking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date1" Type="date" Mode="In" />
+    <Parameter Name="date2" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Search" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date1" Type="date" Mode="In" />
+    <Parameter Name="date2" Type="date" Mode="In" />
+    <Parameter Name="people" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SelectArrival" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="datee" Type="date" Mode="In" />
+  </Function>
+  <Function Name="SelectBookings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SelectDeparture" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="datee" Type="date" Mode="In" />
+  </Function>
+  <EntityContainer Name="Хранилище HotelBookingModel1Container">
+    <EntitySet Name="Autorization" EntityType="Self.Autorization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CategoryOfRoom" EntityType="Self.CategoryOfRoom" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pay" EntityType="Self.Pay" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TypeOfFood" EntityType="Self.TypeOfFood" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Workers" EntityType="Self.Workers" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Pay__Payer__15502E78" Association="Self.FK__Pay__Payer__15502E78">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Pay" EntitySet="Pay" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Client_code" Association="Self.FK_Client_code">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Code_category" Association="Self.FK_Code_category">
+      <End Role="CategoryOfRoom" EntitySet="CategoryOfRoom" />
+      <End Role="Room" EntitySet="Room" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_number" Association="Self.FK_Payment_number">
+      <End Role="Pay" EntitySet="Pay" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Room_code" Association="Self.FK_Room_code">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TypeOfFood" Association="Self.FK_TypeOfFood">
+      <End Role="TypeOfFood" EntitySet="TypeOfFood" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

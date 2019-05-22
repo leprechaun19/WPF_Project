@@ -1,0 +1,385 @@
+﻿<Window x:Class="HotelBooking.Pages.Admin"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelBooking.Pages"
+        xmlns:loc="clr-namespace:HotelBooking"
+        xmlns:data="clr-namespace:HotelBooking.Classes"
+        mc:Ignorable="d"
+        Title="Администрирование отеля" Height="800" Width="1100" MinHeight="800" MinWidth="1100" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded"
+        Icon="{DynamicResource Admin}" Activated="Window_Activated" Background="AliceBlue" >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.3*"></RowDefinition>
+            <RowDefinition Height="30*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Label Style="{DynamicResource MaterialDesignLabel}"  x:Name="LoginAdmin" HorizontalAlignment="Center" />
+            <Button Content="Выйти" HorizontalAlignment="Right" Padding="10 -2 10 0" Height="25" 
+                    Margin="0 0 30 0" Click="Out_Click"/>
+        </Grid>
+
+        <TabControl Grid.Row="1">
+            <TabControl.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFF1F5FF"/>
+                    <GradientStop Color="#FFE6F0FF" Offset="1"/>
+                </RadialGradientBrush>
+            </TabControl.Background>
+            <TabItem Header="Бронирование">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.4*"></RowDefinition>
+                        <RowDefinition Height="25*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel  Orientation="Horizontal" Grid.Row="0"
+                                 Background="AliceBlue">
+                        <Button Click="AddBooking_Click" Margin="10 1 5 1" Background="#FFD7EAFA">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="BookPlus" Foreground="Black" Height="20" Width="20" Margin="0 0 10 0"/>
+                                <TextBlock Text="Добавить" Foreground="Black"/>
+                            </StackPanel>
+                        </Button>
+                        <Button  Click="DeleteBooking_Click" Margin="0 1 5 1" Background="#FFD7EAFA">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="BookMinus" Foreground="Black" Height="20" Width="20" Margin="0 0 10 0"/>
+                                <TextBlock Text="Удалить" Foreground="Black"/>
+                            </StackPanel>
+                        </Button>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                    Margin="580 2 0 2">
+                            <loc:TextBoxWatermarked x:Name="Search" Watermark="Поиск" Width="200" 
+                                                    Style="{DynamicResource MaterialDesignTextBox}" 
+                                                    TextAlignment="Center" FontSize="16" />
+                            <materialDesign:PackIcon Kind="Magnify" Width="25" Height="25" VerticalAlignment="Center" Foreground="DarkSlateGray"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <DataGrid x:Name="Booking" Grid.Row="1" Grid.ColumnSpan="2" CellEditEnding="Booking_CellEditEnding" 
+                              Style="{DynamicResource MaterialDesignDataGrid}"  
+                              HorizontalContentAlignment="Center" HorizontalAlignment="Center" 
+                               CanUserReorderColumns="False" AutoGenerateColumns="False" 
+                              RowBackground="#ffc5d6ff" AlternatingRowBackground="#fff1f5ff" GridLinesVisibility="Vertical" 
+                              VerticalGridLinesBrush="#FF898989" HorizontalGridLinesBrush="#FF898989" Background="#FFF1F5FF" 
+                              data:DataGridTextSearch.SearchValue="{Binding ElementName=Search, Path=Text, UpdateSourceTrigger=PropertyChanged}">
+                        <DataGrid.Resources>
+                            <data:SearchValueConverter x:Key="SearchValueConverter" />
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="data:DataGridTextSearch.IsTextMatch">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource SearchValueConverter}">
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Full_name" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="(data:DataGridTextSearch.SearchValue)" />
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="data:DataGridTextSearch.IsTextMatch" Value="True">
+                                        <Setter Property="IsSelected" Value="True" />
+                                        <Setter Property="Background" Value="#FFFF7261"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.Resources>
+
+                        <DataGrid.Columns >
+                            <DataGridTextColumn Binding="{Binding Booking_number}" Header="№ Брони" Width="100" IsReadOnly="True" />
+                            <DataGridTextColumn Binding="{Binding Room_code}" Header="Номер" Width="90" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding Full_name}" Header="Главный гость" Width="160"/>
+                            <DataGridTextColumn Binding="{Binding Type_name}" Header="Тип питания" Width="130"/>
+                            <DataGridTextColumn Binding="{Binding Payment_number}" Header="Номер платежа" Width="120"/>
+                            <DataGridTextColumn Binding="{Binding DateOfBooking}" Header="Дата бронирования" Width="130"/>
+                            <DataGridTextColumn Binding="{Binding Arrivall}" Header="Заезд" Width="130"/>
+                            <DataGridTextColumn Binding="{Binding Departuree}" Header="Выезд" Width="130"/>
+                            <DataGridTextColumn Binding="{Binding Summ}" Header="Сумма" Width="110"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Отчетность">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 30 0 30" Width="1050" >
+                    <Grid  HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="0*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border BorderBrush="Black" Grid.Row="0">
+                                <Border.Background>
+                                    <SolidColorBrush Color="#FFDFDFDF"/>
+                                </Border.Background>
+                                <Grid >
+                                    <TextBlock  Text="Заезды" FontSize="16" Width="70" HorizontalAlignment="Left"
+                                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                                VerticalAlignment="Center" Margin="20 0"/>
+                                    <Button Click="PlusButton_Click" Width="60" Height="25" Margin="0 5 20 5"
+                                            HorizontalAlignment="Right">
+                                        <materialDesign:PackIcon Kind="Plus" Width="35" Height="30" Margin="-3 -8 0 0"/>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                            <Border x:Name="ArrivalP" BorderBrush="Black" Grid.Row="1" Width="490" Visibility="Collapsed">
+                                <Border.Background>
+                                    <SolidColorBrush Color="#FFEBEBEB"/>
+                                </Border.Background>
+                                <Grid >
+                                    <loc:TextBoxWatermarked x:Name="ArrivalBox" Watermark="17.09.2015" 
+                                                            Style="{DynamicResource MaterialDesignTextBox}" 
+                                                            VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                            Margin="10 0 0 0" Width="110"
+                                                            Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="Room_code" Mode="TwoWay" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <data:DateValidation/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </loc:TextBoxWatermarked>
+                                    <Button Content="Показать"  Padding="5 1" Width="80" HorizontalAlignment="Right"
+                                            Margin="0 5 10 5"
+                                            Click="Arrivals_Click"></Button>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border BorderBrush="Black" Grid.Row="0">
+                                <Border.Background>
+                                    <SolidColorBrush Color="#FFDFDFDF"/>
+                                </Border.Background>
+                                <Grid >
+                                    <TextBlock  Text="Выезды" VerticalAlignment="Center" Margin="20 0" 
+                                                Width="70" HorizontalAlignment="Left"
+                                                FontSize="16" Style="{DynamicResource MaterialDesignTitleTextBlock}"/>
+                                    <Button Click="PlusButtonD_Click" Width="60" Height="25" Margin="0 5 20 5"
+                                            HorizontalAlignment="Right">
+                                        <materialDesign:PackIcon Kind="Plus" Width="35" Height="30" Margin="-3 -8 0 0"/>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                            <Border x:Name="Departure" BorderBrush="Black" Grid.Row="1" Width="490" Visibility="Collapsed">
+                                <Border.Background>
+                                    <SolidColorBrush Color="#FFEBEBEB"/>
+                                </Border.Background>
+                                <Grid >
+                                    <loc:TextBoxWatermarked x:Name="DepartureBox" Watermark="17.09.2015" 
+                                                            Style="{DynamicResource MaterialDesignTextBox}"
+                                                            VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                            Margin="10 0 0 0" Width="110"
+                                                            Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="Full_name" Mode="TwoWay" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <data:DateValidation/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </loc:TextBoxWatermarked>
+                                    <Button Content="Показать" Padding="5 1" Width="80" HorizontalAlignment="Right"
+                                            Margin="0 5 10 5" Click="Departure_Click"></Button>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="0*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border BorderBrush="Black" Grid.Row="0">
+                                <Border.Background>
+                                    <SolidColorBrush Color="#FFDFDFDF"/>
+                                </Border.Background>
+                                <Grid >
+                                    <TextBlock  Text="Свободные номера" FontSize="16" 
+                                                Width="160" HorizontalAlignment="Left"
+                                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                                VerticalAlignment="Center" Margin="20 0"/>
+                                    <Button  Click="PlusButtonF_Click" Width="60" Height="25" Margin="0 5 20 5"
+                                            HorizontalAlignment="Right">
+                                        <materialDesign:PackIcon Kind="Plus" Width="35" Height="30" Margin="-3 -8 0 0"/>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                            <Border x:Name="FreeRooms" BorderBrush="Black" Grid.Row="1" Width="490" Visibility="Collapsed">
+                                <Border.Background>
+                                    <SolidColorBrush Color="#FFEBEBEB"/>
+                                </Border.Background>
+                                <Grid >
+                                    <loc:TextBoxWatermarked x:Name="FreeC" Watermark="17.09.2015" 
+                                                            Style="{DynamicResource MaterialDesignTextBox}"
+                                                            VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                            Margin="10 0 0 0" Width="110"
+                                                            Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="Type_name" Mode="TwoWay" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <data:DateValidation/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </loc:TextBoxWatermarked>
+                                    <Button Content="Показать" Padding="5 1" Width="80" HorizontalAlignment="Right"
+                                            Margin="0 5 10 5" Click="GetFreeRooms_Click"></Button>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                    <DataGrid x:Name="See" Style="{DynamicResource MaterialDesignDataGrid}" Visibility="Collapsed" 
+                               Margin="0 20 0 0" Width="1100" IsReadOnly="True">
+
+                    </DataGrid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Сотрудники">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.4*"></RowDefinition>
+                        <RowDefinition Height="25*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel  Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                                 Background="AliceBlue">
+                        <Button Click="AddWorker_Click" Margin="10 1 5 1" Background="#FFD7EAFA" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="PlusCircle" Foreground="Black" Width="20" 
+                                                         Height="20" Margin="0 0 10 0"/>
+                                <TextBlock Text="Добавить" Foreground="Black"/>
+                            </StackPanel>
+                        </Button>
+                        <Button  Click="DeleteWorker_Click" Margin="0 1 5 1"  Background="#FFD7EAFA" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="MinusCircle" Foreground="Black" Height="20" Width="20" Margin="0 0 10 0"/>
+                                <TextBlock Text="Удалить" Foreground="Black"  />
+                            </StackPanel>
+                        </Button>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                    Margin="580 2 0 2">
+                            <loc:TextBoxWatermarked Watermark="Поиск" x:Name="SearchWorker" Width="200" 
+                                                    Style="{DynamicResource MaterialDesignTextBox}" 
+                                                    TextAlignment="Center" FontSize="16" />
+                            <materialDesign:PackIcon Kind="Magnify" Width="25" Height="25" VerticalAlignment="Center" Foreground="DarkSlateGray"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <DataGrid x:Name="Workers" Grid.Row="1" Grid.ColumnSpan="2" CellEditEnding="Workers_CellEditEnding"
+                              Style="{DynamicResource MaterialDesignDataGrid}"         
+                               CanUserReorderColumns="False" AutoGenerateColumns="False" 
+                              RowBackground="#ffc5d6ff" AlternatingRowBackground="#fff1f5ff"
+                              GridLinesVisibility="Vertical" Padding="5 0"
+                              HorizontalGridLinesBrush="#FF898989" Background="#FFF1F5FF"
+                              data:DataGridTextSearch.SearchValue="{Binding ElementName=SearchWorker, Path=Text, UpdateSourceTrigger=PropertyChanged}">
+                        <DataGrid.Resources>
+                            <data:SearchValueConverter x:Key="SearchValueConverter" />
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="data:DataGridTextSearch.IsTextMatch">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource SearchValueConverter}">
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Full_name" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="(data:DataGridTextSearch.SearchValue)" />
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="data:DataGridTextSearch.IsTextMatch" Value="True">
+                                        <Setter Property="IsSelected" Value="True" />
+                                        <Setter Property="Background" Value="#FFFF7261"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.Resources>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Worker_code}" Header="Код сотрудника" DisplayIndex="0" IsReadOnly="True" Width="170"/>
+                            <DataGridTextColumn Binding="{Binding Full_name}" Header="Полное имя" DisplayIndex="1" Width="260"/>
+                            <DataGridTextColumn Binding="{Binding Birthdate}" Header="Дата рождения" DisplayIndex="2" Width="200"/>
+                            <DataGridTextColumn Binding="{Binding Position}" Header="Должность" DisplayIndex="3" Width="245"/>
+                            <DataGridTextColumn Binding="{Binding Salary}" Header="Зарплата" DisplayIndex="4" Width="200"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Клиенты">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.4*"></RowDefinition>
+                        <RowDefinition Height="25*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel  Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                                 Background="AliceBlue">
+                        <Button Click="AddClient_Click" Margin="10 0 5 0" Background="#FFD7EAFA">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="AccountPlus" Width="20" Foreground="Black"
+                                                         Height="20" Margin="0 0 10 0"/>
+                                <TextBlock Text="Добавить" Foreground="Black"/>
+                            </StackPanel>
+                        </Button>
+                        <Button  Click="DeleteClient_Click" Margin="0 0 5 0" Background="#FFD7EAFA">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="AccountMinus" Foreground="Black" 
+                                                         Height="20" Width="20" Margin="0 0 10 0"/>
+                                <TextBlock Text="Удалить" Foreground="Black"/>
+                            </StackPanel>
+                        </Button>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                    Margin="580 2 0 2">
+                            <loc:TextBoxWatermarked x:Name="SearchClient" Width="200" Watermark="Поиск"
+                                                    Style="{DynamicResource MaterialDesignTextBox}" 
+                                                    TextAlignment="Center" FontSize="16" />
+                            <materialDesign:PackIcon Kind="Magnify" Width="25" Height="25" VerticalAlignment="Center" Foreground="DarkSlateGray"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <DataGrid x:Name="Clients" Grid.Row="1" CellEditEnding="Clients_CellEditEnding"
+                              Style="{DynamicResource MaterialDesignDataGrid}"  
+                              HorizontalContentAlignment="Center" HorizontalAlignment="Center" 
+                               CanUserReorderColumns="False" AutoGenerateColumns="False" 
+                              RowBackground="#ffc5d6ff" AlternatingRowBackground="#fff1f5ff" GridLinesVisibility="Vertical" 
+                              HorizontalGridLinesBrush="#FF898989" Background="#FFF1F5FF"
+                              data:DataGridTextSearch.SearchValue="{Binding ElementName=SearchClient, Path=Text, UpdateSourceTrigger=PropertyChanged}">
+                        <DataGrid.Resources>
+                            <data:SearchValueConverter x:Key="SearchValueConverter" />
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="data:DataGridTextSearch.IsTextMatch">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource SearchValueConverter}">
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Full_name" />
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="(data:DataGridTextSearch.SearchValue)" />
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="data:DataGridTextSearch.IsTextMatch" Value="True">
+                                        <Setter Property="IsSelected" Value="True" />
+                                        <Setter Property="Background" Value="#FFFF7261"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Full_name}" Header="Полное имя" Width="220"/>
+                            <DataGridTextColumn Binding="{Binding Birthdate}" Header="Дата рождения" Width="200"/>
+                            <DataGridTextColumn Binding="{Binding Phone}" Header="Телефон" Width="220"/>
+                            <DataGridTextColumn Binding="{Binding Passport_number}" Header="Номер пасспорта" Width="220"/>
+                            <DataGridTextColumn Binding="{Binding Email}" Header="E-mail" Width="220"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище HotelBookingModel1Container" CdmEntityContainer="HotelBookingEntities1">
+    <EntitySetMapping Name="Bookings">
+      <EntityTypeMapping TypeName="HotelBookingModel1.Booking">
+        <MappingFragment StoreEntitySet="Booking">
+          <ScalarProperty Name="Arrivall" ColumnName="Arrivall" />
+          <ScalarProperty Name="Departuree" ColumnName="Departuree" />
+          <ScalarProperty Name="Booking_number" ColumnName="Booking_number" />
+          <ScalarProperty Name="Room_code" ColumnName="Room_code" />
+          <ScalarProperty Name="Client_code" ColumnName="Client_code" />
+          <ScalarProperty Name="TypeOfFood" ColumnName="TypeOfFood" />
+          <ScalarProperty Name="Payment_number" ColumnName="Payment_number" />
+          <ScalarProperty Name="DateOfBooking" ColumnName="DateOfBooking" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategoryOfRooms">
+      <EntityTypeMapping TypeName="HotelBookingModel1.CategoryOfRoom">
+        <MappingFragment StoreEntitySet="CategoryOfRoom">
+          <ScalarProperty Name="Category_code" ColumnName="Category_code" />
+          <ScalarProperty Name="Category_name" ColumnName="Category_name" />
+          <ScalarProperty Name="NumberOfSeats" ColumnName="NumberOfSeats" />
+          <ScalarProperty Name="NumbersOfRoom" ColumnName="NumbersOfRoom" />
+          <ScalarProperty Name="Servicess" ColumnName="Servicess" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="HotelBookingModel1.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="Client_code" ColumnName="Client_code" />
+          <ScalarProperty Name="Full_name" ColumnName="Full_name" />
+          <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Passport_number" ColumnName="Passport_number" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pays">
+      <EntityTypeMapping TypeName="HotelBookingModel1.Pay">
+        <MappingFragment StoreEntitySet="Pay">
+          <ScalarProperty Name="Payment_number" ColumnName="Payment_number" />
+          <ScalarProperty Name="DateOfPay" ColumnName="DateOfPay" />
+          <ScalarProperty Name="Payer" ColumnName="Payer" />
+          <ScalarProperty Name="Card_number" ColumnName="Card_number" />
+          <ScalarProperty Name="Summ" ColumnName="Summ" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rooms">
+      <EntityTypeMapping TypeName="HotelBookingModel1.Room">
+        <MappingFragment StoreEntitySet="Room">
+          <ScalarProperty Name="Free" ColumnName="Free" />
+          <ScalarProperty Name="Booking" ColumnName="Booking" />
+          <ScalarProperty Name="Repair" ColumnName="Repair" />
+          <ScalarProperty Name="Room_code" ColumnName="Room_code" />
+          <ScalarProperty Name="Code_category" ColumnName="Code_category" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TypeOfFoods">
+      <EntityTypeMapping TypeName="HotelBookingModel1.TypeOfFood">
+        <MappingFragment StoreEntitySet="TypeOfFood">
+          <ScalarProperty Name="Summa" ColumnName="Summa" />
+          <ScalarProperty Name="Type_code" ColumnName="Type_code" />
+          <ScalarProperty Name="Type_name" ColumnName="Type_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Workers">
+      <EntityTypeMapping TypeName="HotelBookingModel1.Worker">
+        <MappingFragment StoreEntitySet="Workers">
+          <ScalarProperty Name="Worker_code" ColumnName="Worker_code" />
+          <ScalarProperty Name="Full_name" ColumnName="Full_name" />
+          <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Autorizations">
+      <EntityTypeMapping TypeName="HotelBookingModel1.Autorization">
+        <MappingFragment StoreEntitySet="Autorization">
+          <ScalarProperty Name="Userr" ColumnName="Userr" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SelectBookings" FunctionName="Хранилище HotelBookingModel1.SelectBookings">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HotelBookingModel1.SelectBooking">
+          <ScalarProperty Name="Booking_number" ColumnName="Booking_number" />
+          <ScalarProperty Name="Room_code" ColumnName="Room_code" />
+          <ScalarProperty Name="Full_name" ColumnName="Full_name" />
+          <ScalarProperty Name="Type_name" ColumnName="Type_name" />
+          <ScalarProperty Name="Payment_number" ColumnName="Payment_number" />
+          <ScalarProperty Name="DateOfBooking" ColumnName="DateOfBooking" />
+          <ScalarProperty Name="Arrivall" ColumnName="Arrivall" />
+          <ScalarProperty Name="Departuree" ColumnName="Departuree" />
+          <ScalarProperty Name="Summ" ColumnName="Summ" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Enter" FunctionName="Хранилище HotelBookingModel1.Enter" />
+    <FunctionImportMapping FunctionImportName="FreeRooms" FunctionName="Хранилище HotelBookingModel1.FreeRooms">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HotelBookingModel1.FreeRooms">
+          <ScalarProperty Name="Room_code" ColumnName="Room_code" />
+          <ScalarProperty Name="Category_name" ColumnName="Category_name" />
+          <ScalarProperty Name="NumberOfSeats" ColumnName="NumberOfSeats" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SelectArrival" FunctionName="Хранилище HotelBookingModel1.SelectArrival">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HotelBookingModel1.SelectBooking">
+          <ScalarProperty Name="Booking_number" ColumnName="Booking_number" />
+          <ScalarProperty Name="Room_code" ColumnName="Room_code" />
+          <ScalarProperty Name="Full_name" ColumnName="Full_name" />
+          <ScalarProperty Name="Type_name" ColumnName="Type_name" />
+          <ScalarProperty Name="Payment_number" ColumnName="Payment_number" />
+          <ScalarProperty Name="DateOfBooking" ColumnName="DateOfBooking" />
+          <ScalarProperty Name="Arrivall" ColumnName="Arrivall" />
+          <ScalarProperty Name="Departuree" ColumnName="Departuree" />
+          <ScalarProperty Name="Summ" ColumnName="Summ" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SelectDeparture" FunctionName="Хранилище HotelBookingModel1.SelectDeparture">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HotelBookingModel1.SelectBooking">
+          <ScalarProperty Name="Booking_number" ColumnName="Booking_number" />
+          <ScalarProperty Name="Room_code" ColumnName="Room_code" />
+          <ScalarProperty Name="Full_name" ColumnName="Full_name" />
+          <ScalarProperty Name="Type_name" ColumnName="Type_name" />
+          <ScalarProperty Name="Payment_number" ColumnName="Payment_number" />
+          <ScalarProperty Name="DateOfBooking" ColumnName="DateOfBooking" />
+          <ScalarProperty Name="Arrivall" ColumnName="Arrivall" />
+          <ScalarProperty Name="Departuree" ColumnName="Departuree" />
+          <ScalarProperty Name="Summ" ColumnName="Summ" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="FreeRoomsForBooking" FunctionName="Хранилище HotelBookingModel1.FreeRoomsForBooking">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HotelBookingModel1.FreeRoomsForBooking">
+          <ScalarProperty Name="Room_code" ColumnName="Room_code" />
+          <ScalarProperty Name="Category_name" ColumnName="Category_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Search" FunctionName="Хранилище HotelBookingModel1.Search">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HotelBookingModel1.Search_Result">
+          <ScalarProperty Name="Room_code" ColumnName="Room_code" />
+          <ScalarProperty Name="Category_name" ColumnName="Category_name" />
+          <ScalarProperty Name="Servicess" ColumnName="Servicess" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="NumberOfSeats" ColumnName="NumberOfSeats" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

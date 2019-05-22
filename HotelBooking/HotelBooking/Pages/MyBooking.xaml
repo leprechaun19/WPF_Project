@@ -1,0 +1,55 @@
+﻿<Page x:Class="HotelBooking.Pages.MyBooking"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HotelBooking.Pages"
+      xmlns:loc="clr-namespace:HotelBooking"
+      xmlns:valid="clr-namespace:HotelBooking.Classes"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="970" MaxHeight="600" MinHeight="600" MinWidth="970" MaxWidth="970"
+      Title="MyBooking" Background="#FFE6F0FF">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.07*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <loc:TextBoxWatermarked x:Name="Name" Watermark="Введите Фамилию" VerticalAlignment="Center"
+                                    Padding="4 1" Margin="190 0 0 4"
+                                    Style="{DynamicResource MaterialDesignTextBox}" FontSize="12" 
+                                    Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Password" Mode="TwoWay" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <valid:NameValidation/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </loc:TextBoxWatermarked>
+            <Button Content="Показать" Click="Button_Click" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                    Margin="0 3 260 3"/>
+        </DockPanel>
+
+        <DataGrid x:Name="Booking" Grid.Row="1" Visibility="Collapsed" Grid.ColumnSpan="2"
+                  Style="{DynamicResource MaterialDesignDataGrid}"  
+                  HorizontalContentAlignment="Center" HorizontalAlignment="Center" 
+                  CanUserReorderColumns="False" AutoGenerateColumns="False" 
+                  RowBackground="#ffbababa" AlternatingRowBackground="#ffdddddd" 
+                  GridLinesVisibility="Vertical" 
+                  VerticalGridLinesBrush="#FF898989" HorizontalGridLinesBrush="#FF898989">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Booking_number}" Header="№ Брони" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Room_code}" Header="Номер" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Type_name}" Header="Тип питания"  IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Payment_number}" Header="Номер платежа"  IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding DateOfBooking}" Header="Дата бронирования" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Arrivall}" Header="Заезд"  IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Departuree}" Header="Выезд"  IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Summ}" Header="Сумма"  IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

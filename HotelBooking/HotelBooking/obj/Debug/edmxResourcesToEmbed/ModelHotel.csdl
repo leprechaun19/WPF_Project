@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HotelBookingModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="Booking_number" />
+    </Key>
+    <Property Name="Booking_number" Type="Int32" Nullable="false" />
+    <Property Name="Room_code" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Client_code" Type="Int32" Nullable="false" />
+    <Property Name="TypeOfFood" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Payment_number" Type="Int32" Nullable="false" />
+    <Property Name="DateOfBooking" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Client" Relationship="Self.FK_Client_code" FromRole="Booking" ToRole="Client" />
+    <NavigationProperty Name="Pay" Relationship="Self.FK_Payment_number" FromRole="Booking" ToRole="Pay" />
+    <NavigationProperty Name="Room" Relationship="Self.FK_Room_code" FromRole="Booking" ToRole="Room" />
+    <NavigationProperty Name="TypeOfFood1" Relationship="Self.FK_TypeOfFood" FromRole="Booking" ToRole="TypeOfFood" />
+    <Property Name="Departuree" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Arrivall" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <EntityType Name="CategoryOfRoom">
+    <Key>
+      <PropertyRef Name="Category_code" />
+    </Key>
+    <Property Name="Category_code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Category_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NumberOfSeats" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="NumbersOfRoom" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Servicess" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Rooms" Relationship="Self.FK_Code_category" FromRole="CategoryOfRoom" ToRole="Room" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Client_code" />
+    </Key>
+    <Property Name="Client_code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Full_name" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Birthdate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Passport_number" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Pays" Relationship="Self.FK__Pay__Payer__15502E78" FromRole="Client" ToRole="Pay" />
+  </EntityType>
+  <EntityType Name="Pay">
+    <Key>
+      <PropertyRef Name="Payment_number" />
+    </Key>
+    <Property Name="Payment_number" Type="Int32" Nullable="false" />
+    <Property Name="DateOfPay" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Payer" Type="Int32" Nullable="false" />
+    <Property Name="Card_number" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Summ" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Client" Relationship="Self.FK__Pay__Payer__15502E78" FromRole="Pay" ToRole="Client" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="Room_code" />
+    </Key>
+    <Property Name="Room_code" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Code_category" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CategoryOfRoom" Relationship="Self.FK_Code_category" FromRole="Room" ToRole="CategoryOfRoom" />
+    <Property Name="Repair" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="Booking" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="Free" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TypeOfFood">
+    <Key>
+      <PropertyRef Name="Type_code" />
+    </Key>
+    <Property Name="Type_code" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Type_name" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Summa" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+  </EntityType>
+  <EntityType Name="Worker">
+    <Key>
+      <PropertyRef Name="Worker_code" />
+    </Key>
+    <Property Name="Worker_code" Type="Int32" Nullable="false" />
+    <Property Name="Full_name" Type="String" MaxLength="35" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Birthdate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Position" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="Salary" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Autorization">
+    <Key>
+      <PropertyRef Name="Login" />
+    </Key>
+    <Property Name="Login" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Userr" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_Client_code">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Client_code" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Client_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_number">
+    <End Role="Pay" Type="Self.Pay" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pay">
+        <PropertyRef Name="Payment_number" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Payment_number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Room_code">
+    <End Role="Room" Type="Self.Room" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="Room_code" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Room_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TypeOfFood">
+    <End Role="TypeOfFood" Type="Self.TypeOfFood" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeOfFood">
+        <PropertyRef Name="Type_code" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="TypeOfFood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Code_category">
+    <End Role="CategoryOfRoom" Type="Self.CategoryOfRoom" Multiplicity="1" />
+    <End Role="Room" Type="Self.Room" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryOfRoom">
+        <PropertyRef Name="Category_code" />
+      </Principal>
+      <Dependent Role="Room">
+        <PropertyRef Name="Code_category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Pay__Payer__15502E78">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Pay" Type="Self.Pay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Client_code" />
+      </Principal>
+      <Dependent Role="Pay">
+        <PropertyRef Name="Payer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HotelBookingEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Bookings" EntityType="Self.Booking" />
+    <EntitySet Name="CategoryOfRooms" EntityType="Self.CategoryOfRoom" />
+    <EntitySet Name="Clients" EntityType="Self.Client" />
+    <EntitySet Name="Pays" EntityType="Self.Pay" />
+    <EntitySet Name="Rooms" EntityType="Self.Room" />
+    <EntitySet Name="TypeOfFoods" EntityType="Self.TypeOfFood" />
+    <EntitySet Name="Workers" EntityType="Self.Worker" />
+    <EntitySet Name="Autorizations" EntityType="Self.Autorization" />
+    <AssociationSet Name="FK_Client_code" Association="Self.FK_Client_code">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_number" Association="Self.FK_Payment_number">
+      <End Role="Pay" EntitySet="Pays" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Room_code" Association="Self.FK_Room_code">
+      <End Role="Room" EntitySet="Rooms" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TypeOfFood" Association="Self.FK_TypeOfFood">
+      <End Role="TypeOfFood" EntitySet="TypeOfFoods" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Code_category" Association="Self.FK_Code_category">
+      <End Role="CategoryOfRoom" EntitySet="CategoryOfRooms" />
+      <End Role="Room" EntitySet="Rooms" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Pay__Payer__15502E78" Association="Self.FK__Pay__Payer__15502E78">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Pay" EntitySet="Pays" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

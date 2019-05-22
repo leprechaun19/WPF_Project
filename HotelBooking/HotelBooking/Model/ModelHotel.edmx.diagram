@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="79188083da4448adb6112c7097a241b1" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="HotelBookingModel1.Booking" Width="1.5" PointX="11.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBookingModel1.CategoryOfRoom" Width="1.5" PointX="5.625" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBookingModel1.Client" Width="1.5" PointX="0.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBookingModel1.Pay" Width="1.5" PointX="2.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBookingModel1.Room" Width="1.5" PointX="9" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBookingModel1.TypeOfFood" Width="1.5" PointX="2.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBookingModel1.Worker" Width="1.5" PointX="5.625" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBookingModel1.Autorization" Width="1.5" PointX="8.25" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="HotelBookingModel1.FK_Client_code" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBookingModel1.FK_Payment_number" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBookingModel1.FK_Room_code" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBookingModel1.FK_TypeOfFood" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBookingModel1.FK_Code_category" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBookingModel1.FK__Pay__Payer__15502E78" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
